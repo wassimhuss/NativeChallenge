@@ -9,7 +9,7 @@ const postReducer = (state = initialState, action)=> {
   switch (action.type) {
    case GET_TOP_ARTICLES:
             let data = [];
-            action.payload.forEach((el, index) => {
+            action.payload.forEach((el) => {
                 let myArticles = new Article(
                     el._id,
                     el.headline.main,
@@ -20,13 +20,18 @@ const postReducer = (state = initialState, action)=> {
                     el.web_url
                 );
                 data.push(myArticles);
-
-                //data.push(index);
             });
             return {
                 ...state,
                 newsFeed: state.newsFeed.concat(data)
             }
+            case 'RESET_ARTICLES':
+                return {
+                    ...state
+                    ,nbofPage:0
+                    ,newsFeed: [] 
+                    
+                };
         case 'ADD_DATA':
             return {
                 ...state,

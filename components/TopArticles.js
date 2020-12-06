@@ -24,7 +24,7 @@ const TopArticles = (props) => {
   useEffect(() => {
 
     dispatch(articlesActions.getArticles())
-  }, [mySearchData])
+  }, [])
 
   const [modalVisible, setModalVisible] = useState(false);
   let TouchableCmp = TouchableOpacity;
@@ -42,21 +42,16 @@ const TopArticles = (props) => {
   }
 
   const onSearch = (searchInput) => {  
-    props.SearchArtical(searchInput);
-     
+    props.SearchArtical(searchInput);  
     setReRenderBoolean(reRenderBoolean);
     setShow(false);
     props.resetData()
-    console.log(mySearchData);
-
-
   }
 
   const back=()=>{
     setShow(true);
+    dispatch(articlesActions.getArticles())
   }
-
-
   return (
 
     <View style={styles.nzel}>
@@ -70,7 +65,7 @@ const TopArticles = (props) => {
               type="text"
               value={searchInput}
               onChangeText={(e) => handleChange(e)}
-              placeholder="Type Here..."
+              placeholder="search Here..."
             />
           </View>
           <View style={styles.buttonBox}>

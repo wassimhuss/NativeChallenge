@@ -1,4 +1,4 @@
-import {GET_SEARCH_ARTICLES, TOP_ARTICLES_ERROR} from '../type'
+import {GET_SEARCH_ARTICLES} from '../type'
 import axios from 'axios'
 
 export const SearchArtical = (items) => {

@@ -1,4 +1,4 @@
-import { GET_SEARCH_ARTICLES,RESET_ARTICLES } from '../type'
+import { GET_SEARCH_ARTICLES} from '../type'
 import Article from '../../models/Article'
 const initialState = {
     searchItem: []

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Modal, StyleSheet, Text, View,TouchableHighlight,Image, Button, Share } from 'react-native';
-import { connect, useSelector, useDispatch, ReactReduxContext } from 'react-redux'
+import React from 'react';
+import { Modal, StyleSheet, Text, View,TouchableHighlight,Image , Share } from 'react-native';
+import { connect, useSelector} from 'react-redux'
 const ArticleDetails = (props) => {
   const onShare = async () => {
     try {
@@ -52,8 +52,6 @@ const ArticleDetails = (props) => {
               <View style={styles.ButtonsContainer}>
 
                 <View><Text>Category:{icn.category}</Text></View>
-
-
                 <View>
                 <TouchableHighlight
                   style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
