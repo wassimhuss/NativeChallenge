@@ -1,4 +1,3 @@
-import { GET_SEARCH_ARTICLES} from '../type'
 import Article from '../../models/Article'
 const initialState = {
     searchItem: []
@@ -6,7 +5,7 @@ const initialState = {
 
 const searchReducer = (state = initialState, action)=> {
   switch (action.type) {
-   case GET_SEARCH_ARTICLES:
+   case 'SEARCH_ARTICLES':
             let data = [];
             action.payload.forEach((el, index) => {
                 let myArticles = new Article(

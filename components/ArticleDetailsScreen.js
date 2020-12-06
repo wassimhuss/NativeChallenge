@@ -1,20 +1,21 @@
 import React from 'react';
-import { Modal, StyleSheet, Text, View,TouchableHighlight,Image , Share } from 'react-native';
+import { Modal, StyleSheet, Text, View,TouchableHighlight,Image , Share,ScrollView} from 'react-native';
 import { connect, useSelector} from 'react-redux'
-const ArticleDetails = (props) => {
+const ArticleDetailsScreen = (props) => {
+  let myData= useSelector(state=>state.artDetails.articlesDetails.item) 
   const onShare = async () => {
     try {
-      const result = await Share.share({
+      const res = await Share.share({
         message:
-          icn.web_url,
+          data.web_url,
       });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
+      if (res.action === Share.sharedAction) {
+        if (res.activityType) {
           
         } else {
        
         }
-      } else if (result.action === Share.dismissedAction) {
+      } else if (res.action === Share.dismissedAction) {
       
       }
     } catch (error) {
@@ -23,10 +24,10 @@ const ArticleDetails = (props) => {
   };
 
 
- let myData= useSelector(state=>state.artDetails.articlesDetails.item) 
+ 
 
- let icn = ( myData) ? myData : null
- if (icn == null) {
+ let data = ( myData) ? myData : null
+ if (data == null) {
     return(<Text></Text>)
  } else {
      
@@ -41,17 +42,16 @@ const ArticleDetails = (props) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-           <Image style={styles.image}  source={{uri:`https://www.nytimes.com/${icn.imgURL.url}`}} ></Image> 
-            <Text style={styles.modalText}>{icn.title}</Text>
-            <Text >{icn.lead_paragraph}</Text>
+           <Image style={styles.image}  source={{uri:`https://www.nytimes.com/${data.img.url}`}} ></Image> 
+            <Text style={styles.modalText}>{data.title}</Text>
+            <ScrollView>
+            <Text >{data.paragraph}</Text>
             <View>
 
 
             </View>
-
+            <View><Text style={styles.catText}>Category:{data.category}</Text></View>
               <View style={styles.ButtonsContainer}>
-
-                <View><Text>Category:{icn.category}</Text></View>
                 <View>
                 <TouchableHighlight
                   style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
@@ -75,7 +75,7 @@ const ArticleDetails = (props) => {
 
               </View>
 
-
+              </ScrollView>
             </View>
              
           </View>
@@ -104,11 +104,10 @@ const styles = StyleSheet.create({
       },
       ButtonsContainer: {
         width:"100%",
-        justifyContent: "space-around",
-        alignItems: "center",
+        justifyContent: "space-between",
+        alignItems: "baseline",
         flexDirection:"row",
-        
-        
+        marginTop:50
       },
       modalView: {
         height: '100%',
@@ -129,9 +128,9 @@ const styles = StyleSheet.create({
       },
       openButton: {
         backgroundColor: "#F194FF",
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2
+        padding: 25,
+        elevation: 2,
+        marginLeft:40
       },
       textStyle: {
         color: "white",
@@ -141,8 +140,8 @@ const styles = StyleSheet.create({
       modalText: {
         marginBottom: 15,
         textAlign: "center",
-        color:'red',
-       
+        color:'black',
+       fontSize:25
       },
       imageContainer: {
         width: '100%',
@@ -154,6 +153,11 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '30%'
       },
+      catText: {
+        marginBottom: 15,
+        textAlign: "center",
+        color:'blue',
+      }
     });
 const mapStateToProps = (state) => ({ articlesDetails: state.artDetails.articlesDetails.item });
-export default connect(mapStateToProps)(ArticleDetails);
+export default connect(mapStateToProps)(ArticleDetailsScreen);

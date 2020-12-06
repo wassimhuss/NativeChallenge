@@ -1,10 +1,10 @@
 class Article {
-  constructor(id, title, desc, imgURL, lead_paragraph,category,web_url) {
+  constructor(id, title, desc, img,paragraph,category,web_url) {
     this.id = id;
     this.title = title;
     this.desc = desc;
-    this.imgURL = imgURL;
-    this.lead_paragraph = lead_paragraph;
+    this.img = img;
+    this.paragraph = paragraph;
     this.category=category;
     this.web_url=web_url;
 

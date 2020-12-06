@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, Platform, TouchableNativeFeedback, Modal, TouchableHighlight, Button } from 'react-native';
+import { StyleSheet,View, FlatList,TouchableOpacity, Platform, TouchableNativeFeedback,  Button, Text } from 'react-native';
 import { connect, useSelector, useDispatch } from 'react-redux'
-import { getArticles } from '../store/actions/articlesActions'
 import * as articlesActions from '../store/actions/articlesActions'
 import ArticleItems from './ArticleItems';
-import ArticleDetails from './ArticleDetails';
+import ArticleDetailsScreen from './ArticleDetailsScreen';
 import { getarticleDetails } from '../store/actions/articlesDetailsActions'
 import { SearchArtical } from '../store/actions/searchAction'
 import { SearchBar } from 'react-native-elements';
 import { resetData } from '../store/actions/searchAction'
-const TopArticles = (props) => {
-  const [show, setShow] = useState(true)
-  const handleClick = (e) => {
-    setVisible(true)
-    props.getarticleDetails(e)
-  }
 
+const ArticlesScreen = (props) => {
+ 
   let mySearchData = useSelector(state => state.searchItem.searchItem)
   const [visible, setVisible] = useState(false);
   const [reRenderBoolean, setReRenderBoolean] = useState(false);
@@ -32,6 +27,11 @@ const TopArticles = (props) => {
     TouchableCmp = TouchableNativeFeedback;
   }
 
+  const [show, setShow] = useState(true)
+  const handleClick = (e) => {
+    setVisible(true)
+    props.getarticleDetails(e)
+  }
 
   
   const [searchInput, setSearchInput] = useState('');
@@ -48,14 +48,15 @@ const TopArticles = (props) => {
     props.resetData()
   }
 
-  const back=()=>{
+  const backhome=()=>{
     setShow(true);
     dispatch(articlesActions.getArticles())
   }
   return (
-
-    <View style={styles.nzel}>
-      <View >
+///////searchbox with button
+    <View style={styles.down}>
+      <Text style={styles.textStyle}>NY TIMES ARTICLES</Text>
+      <View>
         <View style={styles.search} >
           <View style={styles.searchBarBox}>
             <SearchBar  containerStyle={{backgroundColor: '#919191'}}
@@ -71,14 +72,18 @@ const TopArticles = (props) => {
           <View style={styles.buttonBox}>
             <Button title={'Search'}
               style={styles.button}
-              onPress={() => onSearch(searchInput)}
-            >
+              onPress={() => onSearch(searchInput)}>
 
             </Button>
           </View>
-
         </View>
-        <ArticleDetails visible={modalVisible} setVisible={setModalVisible}></ArticleDetails>
+
+
+
+
+        
+           {/* articles with condition 'display' */}
+        <ArticleDetailsScreen visible={modalVisible} setVisible={setModalVisible}></ArticleDetailsScreen>
         {show ?
           <FlatList style={styles.FlatList}
             data={props.articles} 
@@ -86,20 +91,20 @@ const TopArticles = (props) => {
             renderItem={itemData => (
               <TouchableCmp useForeground onPress={() => { handleClick(itemData) }}>
                 <View>
-                <ArticleDetails visible={visible}
+                <ArticleDetailsScreen visible={visible}
                   setVisible={setVisible}
-                  uriz={
-                    (itemData.item.imgURL || itemData.item.imgURL !== undefined)
-                      ? itemData.item.imgURL
+                  URL={
+                    (itemData.item.img || itemData.item.img !== undefined)
+                      ? itemData.item.img
                       : "newsgraphics/images/icons/defaultPromoCrop.png"
                   }
-                ></ArticleDetails>
+                ></ArticleDetailsScreen>
                   <ArticleItems
                     desc={itemData.item.desc}
                     title={itemData.item.title}
-                    uriz={
-                      itemData.item.imgURL
-                        ? itemData.item.imgURL
+                    URL={
+                      itemData.item.img
+                        ? itemData.item.img
                         : "newsgraphics/images/icons/defaultPromoCrop.png"
                     }
                   ></ArticleItems>
@@ -112,53 +117,60 @@ const TopArticles = (props) => {
               await dispatch(articlesActions.addData());
               await dispatch(articlesActions.getArticles());
             }}
-          /> :
+          />
+          
+          
+          :
+
+
           <View>
-            <Button title={'GO HOME'} onPress={()=>{back()}}></Button>
+            <Button title={'GO HOME'} onPress={()=>{backhome()}}></Button>
             <FlatList extraData={reRenderBoolean} style={styles.FlatList}
             data={mySearchData}  
             keyExtractor={item => (item.id)}
             renderItem={itemData => (
               <TouchableCmp useForeground onPress={() => { handleClick(itemData) }}>
                 <View>
-                  <ArticleDetails visible={visible}
+                  <ArticleDetailsScreen visible={visible}
                     setVisible={setVisible}
-                    uriz={
-                      (itemData.item.imgURL || itemData.item.imgURL !== undefined)
-                        ? itemData.item.imgURL
+                    URL={
+                      (itemData.item.img || itemData.item.img !== undefined)
+                        ? itemData.item.img
                         : "newsgraphics/images/icons/defaultPromoCrop.png"
                     }
-                  ></ArticleDetails>
+                  ></ArticleDetailsScreen>
                   <ArticleItems
                     desc={itemData.item.desc}
                     title={itemData.item.title}
-                    uriz={
-                      itemData.item.imgURL
-                        ? itemData.item.imgURL
+                    URL={
+                      itemData.item.img
+                        ? itemData.item.img
                         : "newsgraphics/images/icons/defaultPromoCrop.png"
                     }
                   ></ArticleItems>
                 </View>
               </TouchableCmp>
             )}
-
-
-          
           />
           </View>
         }
       </View>
-
     </View>
-
-
   );
-
 };
 
 const styles = StyleSheet.create({
-  button: {
+  search: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    justifyContent: 'flex-end',
+    width: '100%',
 
+  },
+  SearchBar: {
+    flex: 1,
+  },
+  button: {
     color: 'white',
     height: '100%',
     width: '100%',
@@ -184,19 +196,9 @@ const styles = StyleSheet.create({
     margin: 2
 
   },
-  SearchBar: {
-    flex: 1,
 
 
-  },
 
-  search: {
-    flexDirection: 'row',
-    alignItems: 'stretch',
-    justifyContent: 'flex-end',
-    width: '100%',
-
-  },
   FlatList: {
 
     height: '100%',
@@ -236,15 +238,22 @@ const styles = StyleSheet.create({
     color: 'blue',
     marginVertical: 20,
   },
-  nzel: {
+  down: {
     marginTop: 50
+  },
+  textStyle: {
+    color: "black",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize:28
+    
   }
 });
 
 
 
 
-const mapStateToProps = (state) => ({ articles: state.art.newsFeed });
+const mapStateToProps = (state) => ({ articles: state.art.topArticles });
 
 
-export default connect(mapStateToProps, { getarticleDetails, SearchArtical , resetData })(TopArticles);
+export default connect(mapStateToProps, { getarticleDetails, SearchArtical , resetData })(ArticlesScreen);

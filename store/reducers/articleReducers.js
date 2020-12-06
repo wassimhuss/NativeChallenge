@@ -1,35 +1,35 @@
-import { GET_TOP_ARTICLES } from '../type'
+
 import Article from '../../models/Article'
 const initialState = {
-    newsFeed: [],
+    topArticles: [],
     nbOfPage: 0
 };
 
 const postReducer = (state = initialState, action)=> {
   switch (action.type) {
-   case GET_TOP_ARTICLES:
-            let data = [];
-            action.payload.forEach((el) => {
+   case 'GET_ARTICLES':
+            let MyData = [];
+            action.payload.forEach((data) => {
                 let myArticles = new Article(
-                    el._id,
-                    el.headline.main,
-                    el.abstract,
-                    el.multimedia[5],
-                    el.lead_paragraph,
-                    el.subsection_name,
-                    el.web_url
+                    data._id,
+                    data.headline.main,
+                    data.abstract,
+                    data.multimedia[5],
+                    data.lead_paragraph,
+                    data.document_type,
+                    data.web_url
                 );
-                data.push(myArticles);
+                MyData.push(myArticles);
             });
             return {
                 ...state,
-                newsFeed: state.newsFeed.concat(data)
+                topArticles: state.topArticles.concat(MyData)
             }
             case 'RESET_ARTICLES':
                 return {
                     ...state
                     ,nbofPage:0
-                    ,newsFeed: [] 
+                    ,topArticles: [] 
                     
                 };
         case 'ADD_DATA':

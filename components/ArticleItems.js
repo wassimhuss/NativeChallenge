@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, FlatList, Image,TouchableNativeFeedback, TouchableOpacity, Platform } from 'react-native';
+import { StyleSheet, Text, View, Image} from 'react-native';
 import Card from '../UI/Card';
-import ArticleDetails from './ArticleDetails';
+
 
 
 function ArticleItems(props) {
@@ -12,7 +12,7 @@ function ArticleItems(props) {
   }, [data])
   
  
-  let icn = ( data.uriz) ? data.uriz : 0
+  let Data = ( data.URL) ? data.URL : 0
   
 
     
@@ -21,13 +21,12 @@ function ArticleItems(props) {
    
         <Card style={styles.article}>
           <View style={styles.touchable}>
-
-          <Image style={styles.image}  source={{uri:`https://www.nytimes.com/${icn.url}`}} ></Image>  
-              <View style={styles.lead_paragraph}>
+          <Image style={styles.image}  source={{uri:`https://www.nytimes.com/${Data.url}`}} ></Image>  
+            <View style={styles.lead_paragraph}>
               <Text style={styles.title} >{data.title}</Text>
-                <Text>{data.desc}</Text>
+              <Text>{data.desc}</Text>
               </View>
-          </View>
+            </View>
         </Card> 
     )
 }

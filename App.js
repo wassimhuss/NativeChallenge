@@ -1,8 +1,7 @@
-// import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import {Provider} from 'react-redux';
-import TopArticles from './components/TopArticles';
+import ArticlesScreen from './components/ArticlesScreen';
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import ReduxThunk from "redux-thunk";
@@ -16,22 +15,12 @@ const rootreducer = combineReducers({
   artDetails:articleDetailsReducer 
   
 });
-// const looger = (store) => {
-//   return (next) => {
-//     return (action) => {
-//       // console.log("[Middleware] Dispatching", action);
-//       const result = next(action);
-//       console.log("[Middleware] next state", store.getState());
-//       return result;
-//     };
-//   };
-// };
 const store = createStore(rootreducer, composeWithDevTools( applyMiddleware(ReduxThunk)));
 export default function App() {
   return (
     <Provider store={store}>
       <View style={styles.container}>
-      <TopArticles/>
+      <ArticlesScreen/>
       </View>
     </Provider>
   );

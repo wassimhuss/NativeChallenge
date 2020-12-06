@@ -1,9 +1,4 @@
-import {
 
-    GET_ARTICLES_DETAILS,
-    
-    } from '../type'
-    
     const initialState = {
   
        articlesDetails:[]
@@ -18,7 +13,7 @@ import {
       switch (action.type) {
     
     
-          case GET_ARTICLES_DETAILS:
+          case 'ARTICLES_DETAILS':
           newState = {
             ...newState,
             articlesDetails : action.payload

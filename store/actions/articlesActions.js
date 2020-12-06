@@ -1,4 +1,3 @@
-import {GET_TOP_ARTICLES, TOP_ARTICLES_ERROR} from '../type'
 import axios from 'axios'
 
 export const getArticles = () => {
@@ -7,7 +6,7 @@ export const getArticles = () => {
     try{
         axios.get(page)
          .then((res)=>{
-             dispatch({type: GET_TOP_ARTICLES,
+             dispatch({type: 'GET_ARTICLES',
                 payload: res.data.response.docs});
          });
   

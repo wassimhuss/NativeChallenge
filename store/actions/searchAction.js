@@ -1,14 +1,12 @@
-import {GET_SEARCH_ARTICLES} from '../type'
 import axios from 'axios'
 
 export const SearchArtical = (items) => {
     return async (dispatch) => {
-        
-    const page = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${items}&api-key=HGRCOa4NsS37U9rE0JxNGshoILCbekI5`;
+    const  p = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${items}&api-key=HGRCOa4NsS37U9rE0JxNGshoILCbekI5`;
     try{
-        axios.get(page)
+        axios.get(p)
          .then((res)=>{
-             dispatch({type: GET_SEARCH_ARTICLES,
+             dispatch({type: 'SEARCH_ARTICLES',
                 payload: res.data.response.docs});
          });
   
